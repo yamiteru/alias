@@ -1,0 +1,10 @@
+.idea
+.code
+node_modules
+coverage
+.dist
+.wrangler
+.DS_Store
+*.pem
+.turbo
+out
