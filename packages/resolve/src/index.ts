@@ -11,6 +11,6 @@ export default {
 			return error(500);
 		} 
 
-    return new ok(url);
+    return ok(url);
   }
 };
