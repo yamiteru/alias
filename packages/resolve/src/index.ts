@@ -1,16 +1,24 @@
-import { ok, error } from "utils";
+import {ok, keyFromUrl, errorKeyNotFound, errorKeyEmpty} from "utils";
 import { KVNamespace } from "@cloudflare/workers-types";
 
 export default {
   async fetch(request: Request, env: {
-		KV: KVNamespace,
-	}) {
-		const url = await env.KV.get(new URL(request.url).pathname.slice(1).replace("/", ":"));
+	  KV: KVNamespace,
+  }) {
+  	const key = keyFromUrl(request.url);
 
-		if(url == null){
-			return error(500);
-		} 
+	  // TODO: change if into assert
+	 if(key === "") {
+		 return errorKeyEmpty();
+	 }
 
-    return ok(url);
+  	const value = await env.KV.get(key);
+
+	  // TODO: change if into assert
+	if(value === null){
+		return errorKeyNotFound(key);
+	}
+
+	return ok(value);
   }
 };

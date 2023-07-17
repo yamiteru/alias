@@ -1,6 +1,9 @@
 {
   "private": true,
   "name": "alias",
+  "scripts": {
+    "dev": "turbo dev"
+  },
   "devDependencies": {
     "typescript": "5.1.6",
     "turbo": "1.10.7"

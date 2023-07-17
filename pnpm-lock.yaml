@@ -1,8 +1,4 @@
-lockfileVersion: '6.1'
-
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
+lockfileVersion: '6.0'
 
 importers:
 
@@ -14,6 +10,25 @@ importers:
       typescript:
         specifier: 5.1.6
         version: 5.1.6
+
+  packages/auth:
+    dependencies:
+      utils:
+        specifier: workspace:*
+        version: link:../utils
+    devDependencies:
+      '@cloudflare/workers-types':
+        specifier: 4.20230710.1
+        version: 4.20230710.1
+      esbuild:
+        specifier: 0.18.13
+        version: 0.18.13
+      ts-node:
+        specifier: 10.9.1
+        version: 10.9.1(@types/node@20.4.2)(typescript@5.1.6)
+      wrangler:
+        specifier: 3.2.0
+        version: 3.2.0
 
   packages/resolve:
     dependencies:

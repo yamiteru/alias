@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "resolve",
+  "name": "auth",
   "scripts": {
     "dev": "wrangler dev",
     "build": "ts-node scripts/build.ts"

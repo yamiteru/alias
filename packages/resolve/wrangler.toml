@@ -8,11 +8,6 @@ binding = "KV"
 id = "38873bffc1ab45a0b1455743fad5927a"
 preview_id = "e6e743439ae547fa964c4e108a94d290"
 
-[[ d1_databases ]]
-binding = "__D1_BETA__DB"
-database_name = "alias-dev"
-database_id = "696cb66a-86dd-4aa6-8df4-e1c51533452e"
-
 [build]
 command = "pnpm build"
 
