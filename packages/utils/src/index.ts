@@ -1,12 +1,72 @@
-export const error = (status: number, statusText: string) => new Response("", { status, statusText});
+export type Method = "POST" | "GET" | "PUT" | "DELETE";
 
-// TODO: rename to errorUrlNotFound
-export const errorKeyNotFound = (key: string) => error(500,`Key [${key}] not found`);
+export type Handler = <$Env extends Record<string, any>>(request: Request, env: $Env) => Promise<Response>;
 
-// TODO: rename to errorUrlEmpty
-export const errorKeyEmpty = () => error(500,`Key should not be empty`);
+export type Router = Partial<
+    Record<
+        Method,
+        Array<[
+            `/${string}`,
+            Handler
+        ]>
+    >
+>;
 
-export const ok = (value: string) => new Response(value);
+export function assert(condition: unknown, code: number, msg: string): asserts condition {
+    if(!condition) {
+        console.log(`Error: ${msg}`);
+        throw code;
+    }
+}
 
-// TODO: extract new URL(url).pathname into a function
-export const keyFromUrl = (url: string) => new URL(url).pathname.slice(1).replace("/", ":");
+export const error = (e: any) => {
+    console.log(e);
+    return new Response("", {
+        status: typeof e === "number" ? e: 500
+    });
+};
+
+export const workerSimple = <$Env extends Record<string, unknown>>() => (handler: Handler) => {
+    return async (request: Request, env: $Env) => {
+       try {
+           return await handler(request, env);
+       } catch (e: any) {
+           return error(e);
+       }
+    };
+};
+
+export const workerAdvanced = <
+    $Env extends Record<string, unknown>
+>() => <
+    $Router extends Router
+>(router: $Router) => {
+    return async (request: Request, env: $Env) => {
+       try {
+           const { method, url} = request;
+           const handlers = router[method as Method];
+
+           assert(
+               handlers,
+               404,
+               "This method does not exist in the router"
+           );
+
+           const { origin } = new URL(url);
+
+           for(const [path, handler] of handlers) {
+               if(new URLPattern(path, origin).test(url)) {
+                   return await handler(request, env);
+               }
+           }
+
+           assert(
+               false,
+               500,
+               "No handler for this method and url was found"
+           );
+       } catch (e) {
+           return error(e);
+       }
+    };
+};

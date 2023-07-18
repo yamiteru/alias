@@ -3,6 +3,9 @@
     "target": "ESNext",
     "module": "ESNext",
     "lib": [ "ESNext", "WebWorker" ],
+      "types": [
+        "@cloudflare/workers-types"
+      ],
     "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,

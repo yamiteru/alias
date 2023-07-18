@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 importers:
 
   .:
@@ -30,7 +34,7 @@ importers:
         specifier: 3.2.0
         version: 3.2.0
 
-  packages/resolve:
+  packages/main:
     dependencies:
       utils:
         specifier: workspace:*
@@ -49,7 +53,11 @@ importers:
         specifier: 3.2.0
         version: 3.2.0
 
-  packages/utils: {}
+  packages/utils:
+    devDependencies:
+      '@cloudflare/workers-types':
+        specifier: 4.20230710.1
+        version: 4.20230710.1
 
 packages:
 
