@@ -8,11 +8,18 @@ export default {
 
                 assert(key !== "", 500, "URL should not be empty");
 
-                const value = await KV.get(key);
+                const url = await KV.get(key);
 
-                assert(value !== null, 404, `Alias for this URL not found`);
+                assert(url !== null, 404, `Alias for this URL not found`);
 
-                return new Response(value);
+                const source = await fetch(url);
+                const { headers, status, statusText} = source;
+
+                return new Response(source.body, {
+                    status,
+                    statusText,
+                    headers
+                });
             }]
         ],
         POST: [
