@@ -1,19 +1,15 @@
 # alias
 
-# Workers 
-
-## Main
+# API 
 
 ### `GET /:user/:url`
 
-## User
+Returns source url saved under the combination of user and url.
 
-### `POST /login`
-### `POST /register`
-### `DELETE /:user`
+### `POST /:user/:url`
 
-## Urls
+Saves source url under the combination of user and url.
 
-### `POST /:user`
 ### `DELETE /:user/:url`
-### `PUT /:user/:url`
+
+Deletes source url saved under the combination of user and url.
